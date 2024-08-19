@@ -1,34 +1,28 @@
 package Main;
 
-import Interfaces.Component;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import patronDecorator.ComponenteConcreto;
-import patronDecorator.DecoradorConcretoA;
-import patronDecorator.DecoradorConcretoB;
 
 
 public class Main {
     public static void main(String[] args) {
             
     new Thread(()->{
-        try {
-                DiscountManager.getInstance();
+        try {           
+                DiscountManager discountManager = DiscountManager.getInstance();
                 
-                // Crear componente concreto
-                Component componente = new ComponenteConcreto(); 
+                double precioOriginal = 10000.0;
                 
-                // Decorar el componente con funcionalidades adicionales
-                Component componenteDecoradorA = new DecoradorConcretoA(componente);
-                Component componenteDecoradorB = new DecoradorConcretoB(componente);
-                
-                // Operar sobre el componente original y los decoradores
-                componente.operacion();
-                System.out.println("----------------------------------");
-                componenteDecoradorA.operacion();
-                System.out.println("----------------------------------");
-                componenteDecoradorB.operacion();
-                
+                System.out.println("----------------------------------------");
+                System.out.println("Precio original: $" + precioOriginal);
+                System.out.println("Precio con descuento normal: $" + discountManager.descuentos(precioOriginal, "todos"));
+                System.out.println("Precio con descuento por zapatos: $" + discountManager.descuentos(precioOriginal, "zapatos"));
+                System.out.println("Precio sin descuento: $" + discountManager.descuentos(precioOriginal, "NONE"));
+                System.out.println("----------------------------------------");
+                // Demostrar que siempre se obtiene la misma instancia
+                DiscountManager anotherDiscountManager = DiscountManager.getInstance();
+                System.out.println("Es la misma instancia? " + (discountManager == anotherDiscountManager));
+                               
             } catch (InterruptedException ex) {
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             }

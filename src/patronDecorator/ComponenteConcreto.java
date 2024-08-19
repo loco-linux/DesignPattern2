@@ -7,9 +7,14 @@ import Interfaces.Component;
 
 public class ComponenteConcreto implements Component {
     @Override
-    public void operacion(){
+    public String operacion(){
         // Implementacion del componente concreto
-        System.out.println("Operacion en el componente concreto");
+        return "Descuentos";
+    }
+
+    @Override
+    public double descuento(double precio) {
+        return precio;
     }
 }
 

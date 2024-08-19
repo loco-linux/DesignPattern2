@@ -2,6 +2,12 @@ package Main;
 
 // Utilizando Patrón Singleton
 
+import Interfaces.Component;
+import patronDecorator.ComponenteConcreto;
+import patronDecorator.DecoradorConcretoA;
+import patronDecorator.DecoradorConcretoB;
+
+
 public class DiscountManager {
     private static DiscountManager instance = null;
     
@@ -21,10 +27,9 @@ public class DiscountManager {
             */
             synchronized(DiscountManager.class){
                 if(instance == null){
-                    instance = new DiscountManager();
+                    instance = new DiscountManager();  
                     numeroInstancias++;
-                    System.out.println("Numero de instancias creadas: " + numeroInstancias);
-                    System.out.println("Descuento aplicado con exito!");
+                    System.out.println("---> Numero de instancias creadas: " + numeroInstancias + "\n");                                 
                 }
             }
             
@@ -32,4 +37,30 @@ public class DiscountManager {
         return instance;
     }
     
+    // Metodo para aplicar descuentos
+    public double descuentos(double precio, String tipoDescuento){
+        
+        // Crear componente concreto
+        Component componente = new ComponenteConcreto(); 
+                
+        // Decorar el componente con funcionalidades adicionales
+        Component componenteDecoradorA = new DecoradorConcretoA(componente);
+        Component componenteDecoradorB = new DecoradorConcretoB(componente);       
+        
+        // Operar sobre el componente original y los decoradores
+        switch (tipoDescuento) {
+            case "todos" -> {
+                System.out.println(componenteDecoradorA.operacion());
+                return componenteDecoradorA.descuento(precio); // 10% descuento
+            }
+            case "zapatos" -> {
+                System.out.println(componenteDecoradorB.operacion());
+                return componenteDecoradorB.descuento(precio); // 20% descuento
+            }
+            default -> {
+                return componente.descuento(precio); // sin descuento
+            }
+        }
+                
+    }
 }

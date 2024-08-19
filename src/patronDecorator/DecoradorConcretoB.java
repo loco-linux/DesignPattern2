@@ -10,10 +10,14 @@ public class DecoradorConcretoB extends Decorator {
     }
     
     @Override
-    public void operacion(){
-        super.operacion();
+    public String operacion(){        
         // Agregar funcionalidad adicional al componente
-        System.out.println("Operacion B");
+        return super.operacion() + " Operacion B: Aplica descuento de 20% en zapatos";
     }
+
+    @Override
+    public double descuento(double precio) {
+        return precio * 0.8;
+        }
     
 }
